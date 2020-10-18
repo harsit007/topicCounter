@@ -1,0 +1,135 @@
+<!DOCTYPE HTML> 
+<html>
+ <head>
+  <meta charset=utf-8 />
+  <title>Count number of words in a string</title>
+  <style type="text/css">
+  body {margin-top: 40px;}
+  </style> 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
+</head>
+  <body>
+  <input id="topicName" name="topicName" type="text" placeholder="Enter Topic here"/>
+  <br/>
+  <textarea id="InputText" cols="30" rows="4">Enter text here</textarea>
+  <br>
+  
+  <p>Price per word : 
+  <input type="number" id="pricePerWord" name="pricePerWord" step="0.01" value="0.30" />
+  </p>
+  
+  <p>Number of ScreenShots: 
+  <input type="number" id="numberOfScreenShots" name="numberOfScreenShots" value="0" />
+  </p>
+  
+  <p>Price per ScreenShots : 
+  <input type="number" id="pricePerScreenShots" name="pricePerScreenShots" step="0.10" value="0.50" />
+  </p>
+  
+  <br/>
+  <input type="button" name="Convert" value="Calculate" onClick="count_words();">
+  <br/>
+  <p> No of words:
+  <input id = "noofwords" type="text" value="" size="6"> 
+  </p>
+  <br/>
+  <p>Special Chars Excluded: .?!,/@#$%^&*()<>;:'"{}[]=+-~_\|</p>
+  <p>Words Excluded: The|an|a|An|A|THE|THe|ThE|tHE|thE </p>
+  
+  <table id="myTable">
+	  <thead>
+	  <tr>
+		<th>Id</th>
+		<th>Topic</th>
+		<th>Nos of words</th>
+		<th>Price per Word</th>
+		<th>Words Total</th>
+		<th>Nos of SS</th>
+		<th>Price per SS</th>
+		<th>SS Total</th>
+		<th>Total</th>
+	  </tr>
+	  </thead>
+	  
+	  <tbody>
+	  
+	  </tbody>
+  </table>
+  
+  <h3>GrandTotal:<span id="myGrandTotal">0/-</span></h3> 
+	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script>
+	var myCounter = 0;
+	var myFinalGrand = 0;
+	function count_words()
+		{
+		myCounter++;
+		str1= document.getElementById("InputText").value;
+		
+		var finalPriceWords = 0;
+		var pricePerWord = 0.30;
+		var topicName = "";
+		var pricePerScreenShots = 0.50;
+		var noOfScreenShots = 0;
+		var finalPriceScrenshots = 0;
+		var finalPrice = 0;
+		var noOfWordsFinal = 0;
+		  
+		//Remove the, a, an
+		str1 = str1.replace(/\b(The|an|a|An|A|THE|THe|ThE|tHE|thE)\b/gi,'');
+		
+		//Remove special charset as words
+		str1 = str1.replace(/\b(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\|)\b/gi,'');
+		  
+		//Remove special chars from anywhere  
+		str1 = str1.replace(/(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\|)/gi,'');
+		
+		//exclude  start and end white-space
+		str1 = str1.replace(/(^\s*)|(\s*$)/gi,"");
+		
+		//convert 2 or more spaces to 1  
+		str1 = str1.replace(/[ ]{2,}/gi," ");
+		
+		// exclude newline with a start spacing  
+		str1 = str1.replace(/\n /,"\n");
+		
+		//No of words Final
+		noOfWordsFinal = str1.split(' ').length;
+		
+		document.getElementById("noofwords").value = noOfWordsFinal;
+		
+		//Word cal
+		pricePerWord = document.getElementById("pricePerWord").value;
+		//Final Price
+		finalPriceWords = pricePerWord * noOfWordsFinal;
+		
+		//Final Topic name
+		topicName = document.getElementById("topicName").value;
+		
+		//ScreenShots cal
+		pricePerScreenShots = document.getElementById("pricePerScreenShots").value;
+		noOfScreenShots = document.getElementById("numberOfScreenShots").value;
+		finalPriceScrenshots = pricePerScreenShots*noOfScreenShots;
+		
+		//Final Price
+		finalPrice = finalPriceWords + finalPriceScrenshots;
+		myFinalGrand += finalPrice;
+		//Prepare the rows
+		$('#myTable').DataTable()
+		   .row
+		   .add([myCounter,topicName,noOfWordsFinal,pricePerWord,finalPriceWords,noOfScreenShots,pricePerScreenShots,finalPriceScrenshots,finalPrice])
+		   .draw();
+		
+		//Update grand total
+		document.getElementById("myGrandTotal").innerHTML = myFinalGrand + " /-";
+		}
+		
+		$(document).ready(function() {
+				$('#myTable').DataTable();
+			} );
+  </script>
+  
+  </body>
+<html> 
