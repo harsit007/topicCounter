@@ -10,7 +10,7 @@
 
 </head>
   <body>
-	  <h3>Ankita's Style</h3>
+	  <h3>Ankita's Style v1</h3>
   <input id="topicName" name="topicName" type="text" placeholder="Enter Topic here"/>
   <br/>
   <textarea id="InputText" cols="30" rows="4">Enter text here</textarea>
@@ -82,10 +82,10 @@
 		str1 = str1.replace(/\b(The|an|a|An|A|THE|THe|ThE|tHE|thE)\b/gi,'');
 		
 		//Remove special charset as words
-		str1 = str1.replace(/\b(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\|)\b/gi,'');
+		str1 = str1.replace(/\b(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\||\)\b/gi,'');
 		  
 		//Remove special chars from anywhere  
-		str1 = str1.replace(/(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\|)/gi,'');
+		str1 = str1.replace(/(\.|\?|\!|\,|\\|\/|\@|\#|\$|\%|\^|\&|\*|\(|\)|\<|\>|\;|\:|\'|\"|\{|\}|\[|\]|\=|\+|\-|\~|\_|\||\)/gi,'');
 		
 		//exclude  start and end white-space
 		str1 = str1.replace(/(^\s*)|(\s*$)/gi,"");
